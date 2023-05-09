@@ -1,103 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:autenticacion/services/firebase_service.dart';
+import 'package:autenticacion/home/home.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: login(),
-    );
-  }
+void main() {
+  runApp(const MaterialApp(
+    title: 'Navigation Basics',
+    home: FirstRoute(),
+  ));
 }
 
-class login extends StatelessWidget {
+class FirstRoute extends StatelessWidget {
+  const FirstRoute({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Google()),
-                );
-              },
-              child: Text('Iniciar sesión con Google'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Facebook()),
-                );
-              },
-              child: Text('Iniciar sesión con Facebook'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Twitter()),
-                );
-              },
-              child: Text('Iniciar sesión con Twitter'),
-            ),
-          ],
+        body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+            child: FutureBuilder(
+          future: FirebaseService.firebaseIni(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        await FirebaseService.signInWithGoogle();
+                      },
+                      child: Text("Iniciar con Google"))
+                ],
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        )),
+        Center(
+          child: ElevatedButton(
+            child: const Text('Abrir Ruta'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class Google extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Text('Home Google'),
-      ),
-    );
-  }
-}
-
-class Facebook extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Text('Home Facebook'),
-      ),
-    );
-  }
-}
-
-class Twitter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Text('Home Twitter'),
-      ),
-    );
+        Center(
+          child: ElevatedButton(
+            child: const Text('Abrir Ruta'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+        ),
+      ],
+    ));
   }
 }
