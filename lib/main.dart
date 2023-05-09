@@ -4,7 +4,7 @@ import 'package:autenticacion/home/home.dart';
 
 void main() {
   runApp(const MaterialApp(
-    title: 'Navigation Basics',
+    title: 'login',
     home: FirstRoute(),
   ));
 }
@@ -15,6 +15,9 @@ class FirstRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("home"),
+      ),
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +44,7 @@ class FirstRoute extends StatelessWidget {
         )),
         Center(
           child: ElevatedButton(
-            child: const Text('Abrir Ruta'),
+            child: const Text('Iniciar con twitter'),
             onPressed: () {
               Navigator.push(
                 context,
@@ -52,7 +55,7 @@ class FirstRoute extends StatelessWidget {
         ),
         Center(
           child: ElevatedButton(
-            child: const Text('Abrir Ruta'),
+            child: const Text('Iniciar con Facebook'),
             onPressed: () {
               Navigator.push(
                 context,
